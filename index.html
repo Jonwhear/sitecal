@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Jon's Schedule</title>
+
+  <style>
+    :root {
+      --bg: #f5f5f2;
+      --panel: rgba(255,255,255,.82);
+      --text: #1d1f1c;
+      --muted: #777b74;
+      --line: rgba(29,31,28,.10);
+
+      --free: #dce8df;
+      --free-text: #35523e;
+
+      --vac: #eadff0;
+      --vac-text: #63486d;
+
+      --day: #e7e1d8;
+      --day-text: #5f5648;
+
+      --call: #efd9b8;
+      --call-text: #76542b;
+
+      --weekend: #d9e4ee;
+      --weekend-text: #36566e;
+
+      --night: #ddd9ec;
+      --night-text: #514c72;
+
+      --accent: #20251f;
+      --radius: 22px;
+      --shadow: 0 18px 50px rgba(20,24,20,.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111310;
+        --panel: rgba(29,32,28,.90);
+        --text: #f2f2ec;
+        --muted: #a9aca4;
+        --line: rgba(255,255,255,.10);
+
+        --free: #26362b;
+        --free-text: #cce3d1;
+
+        --vac: #382d3f;
+        --vac-text: #e3cdec;
+
+        --day: #34312c;
+        --day-text: #ddd5c8;
+
+        --call: #3b3022;
+        --call-text: #ecd0a5;
+
+        --weekend: #24333e;
+        --weekend-text: #c9dfea;
+
+        --night: #2e2b41;
+        --night-text: #d9d5ef;
+
+        --accent: #f2f2ec;
+        --shadow: 0 18px 50px rgba(0,0,0,.22);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+        "SF Pro Display", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.5), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .shell {
+      width: min(1050px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 54px);
+      letter-spacing: -.045em;
+      line-height: .98;
+      font-weight: 760;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,.04);
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .calendar {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .weekdays,
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .weekdays {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .10em;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .weekday {
+      padding: 8px 2px;
+    }
+
+    .day {
+      min-height: 104px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 10px;
+      background: rgba(255,255,255,.16);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .day.empty {
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .date {
+      font-size: 15px;
+      font-weight: 720;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 27px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 720;
+      letter-spacing: .01em;
+      white-space: nowrap;
+    }
+
+    .type-free .pill {
+      background: var(--free);
+      color: var(--free-text);
+    }
+    .type-vac .pill {
+      background: var(--vac);
+      color: var(--vac-text);
+    }
+    .type-day .pill {
+      background: var(--day);
+      color: var(--day-text);
+    }
+    .type-call .pill {
+      background: var(--call);
+      color: var(--call-text);
+    }
+    .type-weekend .pill {
+      background: var(--weekend);
+      color: var(--weekend-text);
+    }
+    .type-night .pill {
+      background: var(--night);
+      color: var(--night-text);
+    }
+
+    .type-free { background: color-mix(in srgb, var(--free) 42%, transparent); }
+    .type-vac { background: color-mix(in srgb, var(--vac) 42%, transparent); }
+    .type-day { background: color-mix(in srgb, var(--day) 34%, transparent); }
+    .type-call { background: color-mix(in srgb, var(--call) 38%, transparent); }
+    .type-weekend { background: color-mix(in srgb, var(--weekend) 38%, transparent); }
+    .type-night { background: color-mix(in srgb, var(--night) 42%, transparent); }
+
+    .day.today::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 620;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .summary {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .summary strong {
+      color: var(--text);
+      font-weight: 720;
+    }
+
+    @media (max-width: 680px) {
+      body { padding: 16px; }
+
+      .topbar {
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .calendar {
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      .weekdays,
+      .grid {
+        gap: 4px;
+      }
+
+      .weekday {
+        font-size: 9px;
+      }
+
+      .day {
+        min-height: 72px;
+        border-radius: 11px;
+        padding: 7px;
+      }
+
+      .date {
+        font-size: 13px;
+        margin-bottom: 7px;
+      }
+
+      .pill {
+        min-height: 0;
+        padding: 4px 6px;
+        font-size: 9px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      body { padding: 10px; }
+
+      .eyebrow { font-size: 10px; }
+      h1 { font-size: 30px; }
+
+      button {
+        width: 40px;
+        height: 40px;
+      }
+
+      .day {
+        min-height: 62px;
+        padding: 6px;
+      }
+
+      .pill {
+        width: 100%;
+        justify-content: center;
+        padding: 4px 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Availability</div>
+        <h1 id="monthTitle">October 2026</h1>
+      </div>
+
+      <nav class="nav" aria-label="Calendar navigation">
+        <button id="prevBtn" type="button" aria-label="Previous month">‹</button>
+        <button id="nextBtn" type="button" aria-label="Next month">›</button>
+      </nav>
+    </header>
+
+    <section class="calendar" aria-label="Work schedule calendar">
+      <div class="weekdays" aria-hidden="true">
+        <div class="weekday">Sun</div>
+        <div class="weekday">Mon</div>
+        <div class="weekday">Tue</div>
+        <div class="weekday">Wed</div>
+        <div class="weekday">Thu</div>
+        <div class="weekday">Fri</div>
+        <div class="weekday">Sat</div>
+      </div>
+
+      <div id="calendarGrid" class="grid"></div>
+
+      <div class="legend">
+        <span class="legend-item"><span class="swatch" style="background:var(--free)"></span>Off</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--vac)"></span>Vac</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--day)"></span>Day</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--call)"></span>Call</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--weekend)"></span>Weekend</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--night)"></span>Night</span>
+      </div>
+    </section>
+
+    <p id="summary" class="summary"></p>
+  </main>
+
+  <script>
+    // ------------------------------------------------------------------
+    // EDIT YOUR SCHEDULE HERE
+    //
+    // Later, each date can become an object with start/end times.
+    // Example:
+    // "2026-10-01": { type: "call", start: "06:00", end: "18:00" }
+    // ------------------------------------------------------------------
+
+    const schedule = {
+      // OCTOBER
+      "2026-10-01": "call",
+      "2026-10-02": "day",
+      "2026-10-03": "weekend",
+      "2026-10-04": "free",
+      "2026-10-05": "day",
+      "2026-10-06": "call",
+      "2026-10-07": "day",
+      "2026-10-08": "day",
+      "2026-10-09": "day",
+      "2026-10-10": "call",
+
+      "2026-10-11": "free",
+      "2026-10-12": "free",
+      "2026-10-13": "free",
+      "2026-10-14": "free",
+      "2026-10-15": "free",
+      "2026-10-16": "free",
+      "2026-10-17": "free",
+      "2026-10-18": "free",
+
+      "2026-10-19": "night",
+      "2026-10-21": "night",
+      "2026-10-23": "night",
+      "2026-10-25": "night",
+      "2026-10-27": "night",
+      "2026-10-29": "night",
+      "2026-10-31": "night",
+
+      // NOVEMBER
+      "2026-11-01": "free",
+      "2026-11-02": "day",
+      "2026-11-03": "day",
+      "2026-11-04": "call",
+      "2026-11-05": "day",
+      "2026-11-06": "day",
+      "2026-11-07": "weekend",
+      "2026-11-08": "free",
+      "2026-11-09": "call",
+      "2026-11-10": "day",
+      "2026-11-11": "day",
+      "2026-11-12": "day",
+      "2026-11-13": "day",
+      "2026-11-14": "call",
+      "2026-11-15": "free",
+      "2026-11-16": "day",
+      "2026-11-17": "day",
+      "2026-11-18": "day",
+      "2026-11-19": "call",
+      "2026-11-20": "day",
+      "2026-11-21": "weekend",
+      "2026-11-22": "free",
+      "2026-11-23": "day",
+      "2026-11-24": "call",
+      "2026-11-25": "day",
+      "2026-11-26": "day",
+      "2026-11-27": "day",
+      "2026-11-28": "free",
+      "2026-11-29": "call",
+      "2026-11-30": "day",
+
+      // DECEMBER — PCDC nights
+      "2026-12-14": "night",
+      "2026-12-16": "night",
+      "2026-12-18": "night",
+      "2026-12-20": "night",
+      "2026-12-22": "night",
+      "2026-12-24": "night",
+      "2026-12-26": "night",
+      "2026-12-28": "night",
+      "2026-12-30": "night"
+    };
+
+    const labels = {
+      free: "Off",
+      vac: "Vac",
+      day: "Day",
+      call: "Call",
+      weekend: "Weekend",
+      night: "Night"
+    };
+
+    let currentYear = 2026;
+    let currentMonth = 9; // October, because JavaScript months are 0–11
+
+    const title = document.getElementById("monthTitle");
+    const grid = document.getElementById("calendarGrid");
+    const summary = document.getElementById("summary");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function pad(number) {
+      return String(number).padStart(2, "0");
+    }
+
+    function dateKey(year, monthIndex, day) {
+      return `${year}-${pad(monthIndex + 1)}-${pad(day)}`;
+    }
+
+    function getType(entry) {
+      return typeof entry === "string" ? entry : entry?.type;
+    }
+
+    function renderCalendar() {
+      grid.innerHTML = "";
+
+      const firstDay = new Date(currentYear, currentMonth, 1);
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const startingWeekday = firstDay.getDay();
+
+      title.textContent = firstDay.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric"
+      });
+
+      for (let i = 0; i < startingWeekday; i++) {
+        const blank = document.createElement("div");
+        blank.className = "day empty";
+        grid.appendChild(blank);
+      }
+
+      const counts = { free: 0, vac: 0, day: 0, call: 0, weekend: 0, night: 0 };
+
+      const today = new Date();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const key = dateKey(currentYear, currentMonth, day);
+        const entry = schedule[key];
+        const type = getType(entry);
+
+        const cell = document.createElement("div");
+        cell.className = "day";
+
+        if (
+          currentYear === today.getFullYear() &&
+          currentMonth === today.getMonth() &&
+          day === today.getDate()
+        ) {
+          cell.classList.add("today");
+        }
+
+        const number = document.createElement("div");
+        number.className = "date";
+        number.textContent = day;
+        cell.appendChild(number);
+
+        if (type && labels[type]) {
+          cell.classList.add(`type-${type}`);
+
+          const pill = document.createElement("span");
+          pill.className = "pill";
+          pill.textContent = labels[type];
+          cell.appendChild(pill);
+
+          counts[type]++;
+        }
+
+        grid.appendChild(cell);
+      }
+
+      const pieces = [];
+      if (counts.free) pieces.push(`<strong>${counts.free}</strong> off`);
+      if (counts.vac) pieces.push(`<strong>${counts.vac}</strong> vacation`);
+      if (counts.call) pieces.push(`<strong>${counts.call}</strong> call`);
+      if (counts.night) pieces.push(`<strong>${counts.night}</strong> nights`);
+      if (counts.weekend) pieces.push(`<strong>${counts.weekend}</strong> weekend`);
+      if (counts.day) pieces.push(`<strong>${counts.day}</strong> day`);
+
+      summary.innerHTML = pieces.length
+        ? pieces.join(" · ")
+        : "No schedule entries have been added for this month yet.";
+
+      prevBtn.disabled = currentYear === 2026 && currentMonth === 9;
+      nextBtn.disabled = currentYear === 2026 && currentMonth === 11;
+
+      prevBtn.style.opacity = prevBtn.disabled ? ".35" : "1";
+      nextBtn.style.opacity = nextBtn.disabled ? ".35" : "1";
+      prevBtn.style.cursor = prevBtn.disabled ? "default" : "pointer";
+      nextBtn.style.cursor = nextBtn.disabled ? "default" : "pointer";
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentYear === 2026 && currentMonth === 9) return;
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentYear === 2026 && currentMonth === 11) return;
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar();
+    });
+
+    renderCalendar();
+  </script>
+</body>
+</html>
