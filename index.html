@@ -32,6 +32,9 @@
       --night: #ddd9ec;
       --night-text: #514c72;
 
+      --tbd: #e6e4df;
+      --tbd-text: #6a685f;
+
       --accent: #20251f;
       --radius: 22px;
       --shadow: 0 18px 50px rgba(20,24,20,.08);
@@ -62,6 +65,9 @@
 
         --night: #2e2b41;
         --night-text: #d9d5ef;
+
+        --tbd: #30312e;
+        --tbd-text: #c9c8c0;
 
         --accent: #f2f2ec;
         --shadow: 0 18px 50px rgba(0,0,0,.22);
@@ -224,6 +230,10 @@
       background: var(--night);
       color: var(--night-text);
     }
+    .type-tbd .pill {
+      background: var(--tbd);
+      color: var(--tbd-text);
+    }
 
     .type-free { background: color-mix(in srgb, var(--free) 42%, transparent); }
     .type-vac { background: color-mix(in srgb, var(--vac) 42%, transparent); }
@@ -231,6 +241,7 @@
     .type-call { background: color-mix(in srgb, var(--call) 38%, transparent); }
     .type-weekend { background: color-mix(in srgb, var(--weekend) 38%, transparent); }
     .type-night { background: color-mix(in srgb, var(--night) 42%, transparent); }
+    .type-tbd { background: color-mix(in srgb, var(--tbd) 35%, transparent); }
 
     .day.today::after {
       content: "";
@@ -381,6 +392,7 @@
         <span class="legend-item"><span class="swatch" style="background:var(--call)"></span>Call</span>
         <span class="legend-item"><span class="swatch" style="background:var(--weekend)"></span>Weekend</span>
         <span class="legend-item"><span class="swatch" style="background:var(--night)"></span>Night</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--tbd)"></span>TBD – Neuro</span>
       </div>
     </section>
 
@@ -468,6 +480,199 @@
       "2026-12-26": "night",
       "2026-12-28": "night",
       "2026-12-30": "night"
+
+      // JANUARY 2027
+      "2027-01-01": "day",
+      "2027-01-02": "free",
+      "2027-01-03": "call",
+      "2027-01-04": "day",
+      "2027-01-05": "day",
+      "2027-01-06": "day",
+      "2027-01-07": "call",
+      "2027-01-08": "day",
+      "2027-01-09": "day",
+      "2027-01-10": "free",
+      "2027-01-11": "call",
+      "2027-01-12": "day",
+      "2027-01-13": "day",
+      "2027-01-14": "day",
+      "2027-01-15": "call",
+      "2027-01-16": "day",
+      "2027-01-17": "free",
+      "2027-01-18": "day",
+      "2027-01-19": "day",
+      "2027-01-20": "day",
+      "2027-01-21": "day",
+      "2027-01-22": "day",
+      "2027-01-23": "free",
+      "2027-01-24": "free",
+      "2027-01-25": "day",
+      "2027-01-26": "day",
+      "2027-01-27": "day",
+      "2027-01-28": "day",
+      "2027-01-29": "day",
+      "2027-01-30": "free",
+      "2027-01-31": "free",
+
+      // FEBRUARY 2027
+      "2027-02-01": "day",
+      "2027-02-02": "day",
+      "2027-02-03": "day",
+      "2027-02-04": "call",
+      "2027-02-05": "day",
+      "2027-02-06": "day",
+      "2027-02-07": "free",
+      "2027-02-08": "vac",
+      "2027-02-09": "vac",
+      "2027-02-10": "vac",
+      "2027-02-11": "vac",
+      "2027-02-12": "vac",
+      "2027-02-13": "vac",
+      "2027-02-14": "vac",
+      "2027-02-15": "day",
+      "2027-02-16": "day",
+      "2027-02-17": "day",
+      "2027-02-18": "day",
+      "2027-02-19": "day",
+      "2027-02-20": "free",
+      "2027-02-21": "free",
+      "2027-02-22": "day",
+      "2027-02-23": "day",
+      "2027-02-24": "day",
+      "2027-02-25": "day",
+      "2027-02-26": "day",
+      "2027-02-27": "free",
+      "2027-02-28": "free",
+
+      // MARCH — NEURO TBD 2027
+      "2027-03-01": "tbd",
+      "2027-03-02": "tbd",
+      "2027-03-03": "tbd",
+      "2027-03-04": "tbd",
+      "2027-03-05": "tbd",
+      "2027-03-06": "tbd",
+      "2027-03-07": "tbd",
+      "2027-03-08": "tbd",
+      "2027-03-09": "tbd",
+      "2027-03-10": "tbd",
+      "2027-03-11": "tbd",
+      "2027-03-12": "tbd",
+      "2027-03-13": "tbd",
+      "2027-03-14": "tbd",
+      "2027-03-15": "tbd",
+      "2027-03-16": "tbd",
+      "2027-03-17": "tbd",
+      "2027-03-18": "tbd",
+      "2027-03-19": "tbd",
+      "2027-03-20": "tbd",
+      "2027-03-21": "tbd",
+      "2027-03-22": "tbd",
+      "2027-03-23": "tbd",
+      "2027-03-24": "tbd",
+      "2027-03-25": "tbd",
+      "2027-03-26": "tbd",
+      "2027-03-27": "tbd",
+      "2027-03-28": "tbd",
+      "2027-03-29": "tbd",
+      "2027-03-30": "tbd",
+      "2027-03-31": "tbd",
+
+      // APRIL 2027
+      "2027-04-01": "free",
+      "2027-04-02": "night",
+      "2027-04-03": "free",
+      "2027-04-04": "night",
+      "2027-04-05": "free",
+      "2027-04-06": "night",
+      "2027-04-07": "free",
+      "2027-04-08": "night",
+      "2027-04-09": "free",
+      "2027-04-10": "night",
+      "2027-04-11": "free",
+      "2027-04-12": "call",
+      "2027-04-13": "day",
+      "2027-04-14": "day",
+      "2027-04-15": "day",
+      "2027-04-16": "day",
+      "2027-04-17": "call",
+      "2027-04-18": "free",
+      "2027-04-19": "day",
+      "2027-04-20": "day",
+      "2027-04-21": "day",
+      "2027-04-22": "call",
+      "2027-04-23": "day",
+      "2027-04-24": "weekend",
+      "2027-04-25": "free",
+      "2027-04-26": "day",
+      "2027-04-27": "call",
+      "2027-04-28": "day",
+      "2027-04-29": "day",
+      "2027-04-30": "day",
+
+      // MAY 2027
+      "2027-05-01": "free",
+      "2027-05-02": "call",
+      "2027-05-03": "day",
+      "2027-05-04": "day",
+      "2027-05-05": "day",
+      "2027-05-06": "day",
+      "2027-05-07": "call",
+      "2027-05-08": "weekend",
+      "2027-05-09": "free",
+      "2027-05-10": "day",
+      "2027-05-11": "day",
+      "2027-05-12": "call",
+      "2027-05-13": "day",
+      "2027-05-14": "day",
+      "2027-05-15": "weekend",
+      "2027-05-16": "free",
+      "2027-05-17": "day",
+      "2027-05-18": "day",
+      "2027-05-19": "day",
+      "2027-05-20": "day",
+      "2027-05-21": "day",
+      "2027-05-22": "weekend",
+      "2027-05-23": "free",
+      "2027-05-24": "night",
+      "2027-05-25": "free",
+      "2027-05-26": "night",
+      "2027-05-27": "free",
+      "2027-05-28": "night",
+      "2027-05-29": "free",
+      "2027-05-30": "night",
+      "2027-05-31": "free",
+
+      // JUNE 2027
+      "2027-06-01": "night",
+      "2027-06-02": "free",
+      "2027-06-03": "night",
+      "2027-06-04": "free",
+      "2027-06-05": "night",
+      "2027-06-06": "free",
+      "2027-06-07": "day",
+      "2027-06-08": "day",
+      "2027-06-09": "call",
+      "2027-06-10": "day",
+      "2027-06-11": "day",
+      "2027-06-12": "weekend",
+      "2027-06-13": "free",
+      "2027-06-14": "call",
+      "2027-06-15": "day",
+      "2027-06-16": "day",
+      "2027-06-17": "day",
+      "2027-06-18": "day",
+      "2027-06-19": "call",
+      "2027-06-20": "free",
+      "2027-06-21": "day",
+      "2027-06-22": "day",
+      "2027-06-23": "day",
+      "2027-06-24": "call",
+      "2027-06-25": "day",
+      "2027-06-26": "weekend",
+      "2027-06-27": "free",
+      "2027-06-28": "day",
+      "2027-06-29": "call",
+      "2027-06-30": "day"
     };
 
     const labels = {
@@ -476,7 +681,8 @@
       day: "Day",
       call: "Call",
       weekend: "Weekend",
-      night: "Night"
+      night: "Night",
+      tbd: "TBD – Neuro"
     };
 
     let currentYear = 2026;
@@ -518,7 +724,7 @@
         grid.appendChild(blank);
       }
 
-      const counts = { free: 0, vac: 0, day: 0, call: 0, weekend: 0, night: 0 };
+      const counts = { free: 0, vac: 0, day: 0, call: 0, weekend: 0, night: 0, tbd: 0 };
 
       const today = new Date();
 
@@ -564,13 +770,14 @@
       if (counts.night) pieces.push(`<strong>${counts.night}</strong> nights`);
       if (counts.weekend) pieces.push(`<strong>${counts.weekend}</strong> weekend`);
       if (counts.day) pieces.push(`<strong>${counts.day}</strong> day`);
+      if (counts.tbd) pieces.push(`<strong>${counts.tbd}</strong> TBD – Neuro`);
 
       summary.innerHTML = pieces.length
         ? pieces.join(" · ")
         : "No schedule entries have been added for this month yet.";
 
       prevBtn.disabled = currentYear === 2026 && currentMonth === 9;
-      nextBtn.disabled = currentYear === 2026 && currentMonth === 11;
+      nextBtn.disabled = currentYear === 2027 && currentMonth === 5;
 
       prevBtn.style.opacity = prevBtn.disabled ? ".35" : "1";
       nextBtn.style.opacity = nextBtn.disabled ? ".35" : "1";
@@ -589,7 +796,7 @@
     });
 
     nextBtn.addEventListener("click", () => {
-      if (currentYear === 2026 && currentMonth === 11) return;
+      if (currentYear === 2027 && currentMonth === 5) return;
       currentMonth++;
       if (currentMonth > 11) {
         currentMonth = 0;
