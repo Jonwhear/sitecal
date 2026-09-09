@@ -32,9 +32,6 @@
       --night: #ddd9ec;
       --night-text: #514c72;
 
-      --tbd: #e6e4df;
-      --tbd-text: #6a685f;
-
       --accent: #20251f;
       --radius: 22px;
       --shadow: 0 18px 50px rgba(20,24,20,.08);
@@ -65,9 +62,6 @@
 
         --night: #2e2b41;
         --night-text: #d9d5ef;
-
-        --tbd: #30312e;
-        --tbd-text: #c9c8c0;
 
         --accent: #f2f2ec;
         --shadow: 0 18px 50px rgba(0,0,0,.22);
@@ -230,10 +224,6 @@
       background: var(--night);
       color: var(--night-text);
     }
-    .type-tbd .pill {
-      background: var(--tbd);
-      color: var(--tbd-text);
-    }
 
     .type-free { background: color-mix(in srgb, var(--free) 42%, transparent); }
     .type-vac { background: color-mix(in srgb, var(--vac) 42%, transparent); }
@@ -241,7 +231,6 @@
     .type-call { background: color-mix(in srgb, var(--call) 38%, transparent); }
     .type-weekend { background: color-mix(in srgb, var(--weekend) 38%, transparent); }
     .type-night { background: color-mix(in srgb, var(--night) 42%, transparent); }
-    .type-tbd { background: color-mix(in srgb, var(--tbd) 35%, transparent); }
 
     .day.today::after {
       content: "";
@@ -392,7 +381,6 @@
         <span class="legend-item"><span class="swatch" style="background:var(--call)"></span>Call</span>
         <span class="legend-item"><span class="swatch" style="background:var(--weekend)"></span>Weekend</span>
         <span class="legend-item"><span class="swatch" style="background:var(--night)"></span>Night</span>
-        <span class="legend-item"><span class="swatch" style="background:var(--tbd)"></span>TBD – Neuro</span>
       </div>
     </section>
 
@@ -480,6 +468,7 @@
       "2026-12-26": "night",
       "2026-12-28": "night",
       "2026-12-30": "night"
+,
 
       // JANUARY 2027
       "2027-01-01": "day",
@@ -544,38 +533,7 @@
       "2027-02-27": "free",
       "2027-02-28": "free",
 
-      // MARCH — NEURO TBD 2027
-      "2027-03-01": "tbd",
-      "2027-03-02": "tbd",
-      "2027-03-03": "tbd",
-      "2027-03-04": "tbd",
-      "2027-03-05": "tbd",
-      "2027-03-06": "tbd",
-      "2027-03-07": "tbd",
-      "2027-03-08": "tbd",
-      "2027-03-09": "tbd",
-      "2027-03-10": "tbd",
-      "2027-03-11": "tbd",
-      "2027-03-12": "tbd",
-      "2027-03-13": "tbd",
-      "2027-03-14": "tbd",
-      "2027-03-15": "tbd",
-      "2027-03-16": "tbd",
-      "2027-03-17": "tbd",
-      "2027-03-18": "tbd",
-      "2027-03-19": "tbd",
-      "2027-03-20": "tbd",
-      "2027-03-21": "tbd",
-      "2027-03-22": "tbd",
-      "2027-03-23": "tbd",
-      "2027-03-24": "tbd",
-      "2027-03-25": "tbd",
-      "2027-03-26": "tbd",
-      "2027-03-27": "tbd",
-      "2027-03-28": "tbd",
-      "2027-03-29": "tbd",
-      "2027-03-30": "tbd",
-      "2027-03-31": "tbd",
+      // MARCH 2027 intentionally blank
 
       // APRIL 2027
       "2027-04-01": "free",
@@ -681,8 +639,7 @@
       day: "Day",
       call: "Call",
       weekend: "Weekend",
-      night: "Night",
-      tbd: "TBD – Neuro"
+      night: "Night"
     };
 
     let currentYear = 2026;
@@ -724,7 +681,7 @@
         grid.appendChild(blank);
       }
 
-      const counts = { free: 0, vac: 0, day: 0, call: 0, weekend: 0, night: 0, tbd: 0 };
+      const counts = { free: 0, vac: 0, day: 0, call: 0, weekend: 0, night: 0 };
 
       const today = new Date();
 
@@ -770,7 +727,6 @@
       if (counts.night) pieces.push(`<strong>${counts.night}</strong> nights`);
       if (counts.weekend) pieces.push(`<strong>${counts.weekend}</strong> weekend`);
       if (counts.day) pieces.push(`<strong>${counts.day}</strong> day`);
-      if (counts.tbd) pieces.push(`<strong>${counts.tbd}</strong> TBD – Neuro`);
 
       summary.innerHTML = pieces.length
         ? pieces.join(" · ")
